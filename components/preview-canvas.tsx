@@ -8,6 +8,8 @@ import { SimpleListPicker } from "./simple-list-picker";
 import { TextAaIcon, SunIcon, MoonIcon, CornersOutIcon } from "@phosphor-icons/react";
 import { SegmentedToggle, Segment } from "./segmented-toggle";
 import { ColumnOne } from "./column-one";
+import { ColumnTwo } from "./column-two";
+import { ColumnThree } from "./column-three";
 
 // Step 1 of the preview build: prove the isolation mechanism works before
 // building anything else on top of it. Everything inside the wrapper div
@@ -92,8 +94,10 @@ export  function PreviewCanvas() {
            {view === "dashboard" ? (
         <p className="text-surface-muted text-sm">Dashboard view, empty state for now.</p>
       ) : (
-         <div className="container mx-auto grid grid-col-3">
+         <div className="container mx-auto grid grid-cols-3">
           <ColumnOne container={scopedContainerRef.current} />
+          <ColumnTwo />
+          <ColumnThree />
          </div>)}
         </div>
 

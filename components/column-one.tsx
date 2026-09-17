@@ -26,7 +26,7 @@ export function ColumnOne({ container }: { container?: HTMLDivElement | null }){
   const [demoRadio, setDemoRadio] = useState("a");
 
   return (
-    <div className="flex w-[360px] flex-col gap-10">
+    <div className="flex items-start max-w-90 flex-col gap-10">
       {/* Company text input */}
       <div className="flex w-full flex-col gap-1">
         <span className="text-surface-subtle text-sm font-medium">Company</span>
@@ -36,7 +36,7 @@ export function ColumnOne({ container }: { container?: HTMLDivElement | null }){
         />
         <div className="flex items-center gap-1">
           <InfoIcon className="text-surface-muted size-4" />
-          <span className="text-surface-muted text-x s">We wont share your email</span>
+          <span className="text-surface-muted text-xs">We wont share your email</span>
         </div>
       </div>
 
@@ -61,7 +61,7 @@ export function ColumnOne({ container }: { container?: HTMLDivElement | null }){
           <RadioGroupItem value="a" />
           <RadioGroupItem value="b" />
         </RadioGroup>
-        <SpinnerIcon className="text-surface-muted size-6 animate-spin" />
+        <SpinnerIcon className="text-surface-muted shrink-0 size-6 animate-spin" />
       </div>
 
       <PriceSlider />
