@@ -1,4 +1,4 @@
-import PreviewCanvas from "@/components/preview-canvas";
+import {PreviewCanvas} from "@/components/preview-canvas";
 
 export default function Preview() {
 

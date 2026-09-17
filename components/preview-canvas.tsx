@@ -1,12 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { generateAccentScale, accentScaleToCssVars } from "@/lib/accent-scale-client";
 import { AccentPicker } from "./accent-picker";
 import { NeutralPicker } from "./neutral-picker";
 import { SimpleListPicker } from "./simple-list-picker";
 import { TextAaIcon, SunIcon, MoonIcon, CornersOutIcon } from "@phosphor-icons/react";
 import { SegmentedToggle, Segment } from "./segmented-toggle";
+import { ColumnOne } from "./column-one";
 
 // Step 1 of the preview build: prove the isolation mechanism works before
 // building anything else on top of it. Everything inside the wrapper div
@@ -31,7 +32,7 @@ const FONT_LABELS: Record<string, string> = {
   "preset-5": "Inter",
 };
 
-export default function PreviewCanvas() {
+export  function PreviewCanvas() {
   const [view, setView] = useState<"components" | "dashboard">("components");
   const [accentMode, setAccentMode] = useState<"preset" | "custom">("preset");
   const [accentPreset, setAccentPreset] = useState("tushe");
@@ -40,6 +41,11 @@ export default function PreviewCanvas() {
   const [radius, setRadius] = useState("default");
   const [font, setFont] = useState("preset-5");
   const [theme, setTheme] = useState("Light");
+  // The container any popover living inside the scoped preview (currently
+  // ColumnOne's State dropdown) needs to portal into, so it picks up this
+  // div's local data-theme/data-accent/etc instead of falling back to the
+  // real page's actual values.
+  const scopedContainerRef = useRef<HTMLDivElement>(null);
 
   // Recomputed only when the hex actually changes, not on every render,
   // this runs on every pointer-move while dragging the picker otherwise.
@@ -66,33 +72,31 @@ export default function PreviewCanvas() {
         </SegmentedToggle>
         <SegmentedToggle>
             <Segment square active={theme === "Light"} onClick={() => setTheme("Light")}>
-              <SunIcon className="text-surface-muted size-4" />
+              <SunIcon weight="fill" className="text-surface-muted size-4" />
             </Segment>
             <Segment square active={theme === "Dark"} onClick={() => setTheme("Dark")}>
-              <MoonIcon className="text-surface-muted size-4" />
+              <MoonIcon weight="fill" className="text-surface-muted size-4" />
             </Segment>
           </SegmentedToggle>
       </div>
-
-      {view === "dashboard" ? (
-        <p className="text-surface-muted text-sm">Dashboard view, empty state for now.</p>
-      ) : (
-        <>
-       <div
+      <div
+          ref={scopedContainerRef}
           data-accent={accentMode === "preset" ? accentPreset : "custom"}
           data-neutral={neutral}
           data-radius={radius}
           data-font={font}
           data-theme={theme}
           style={customAccentVars}
-          className="bg-surface-flat p-6 min-h-screen"
+          className="bg-surface-flat py-4 px-8 min-h-screen font-sans"
         >
-          <button className="bg-brand-bold text-brand-inverse px-4 py-2 rounded-md font-sans text-lg">
-            Test button (inside)
-          </button>
+           {view === "dashboard" ? (
+        <p className="text-surface-muted text-sm">Dashboard view, empty state for now.</p>
+      ) : (
+         <div className="container mx-auto grid grid-col-3">
+          <ColumnOne container={scopedContainerRef.current} />
+         </div>)}
         </div>
-        </>
-      )}
+
         <div className="fixed w-full bottom-0 flex justify-center gap-4 px-8 py-4 border-t border-surface-faint bg-surface-flat">
         <AccentPicker
           mode={accentMode}

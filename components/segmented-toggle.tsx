@@ -9,7 +9,7 @@
 
 export function SegmentedToggle({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-surface-subtle flex items-start gap-1 rounded-2xl p-0.5">
+    <div className="bg-input-subtle flex justify-start items-start gap-1 rounded-2xl p-0.5">
       {children}
     </div>
   );
@@ -31,7 +31,7 @@ export function Segment({
       onClick={onClick}
       className={
         active
-          ? `bg-surface-flat shadow-sm flex h-9 items-center justify-center rounded-xl px-2.5 ${square ? "w-9" : ""}`
+          ? `bg-static-white shadow-sm flex h-9 items-center justify-center rounded-xl px-2.5 ${square ? "w-9" : ""}`
           : `flex h-9 items-center justify-center rounded-xl px-2.5 ${square ? "w-9" : ""}`
       }
     >

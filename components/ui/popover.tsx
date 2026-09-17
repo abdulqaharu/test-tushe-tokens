@@ -18,14 +18,22 @@ function PopoverContent({
   alignOffset = 0,
   side = "bottom",
   sideOffset = 4,
+  container,
   ...props
 }: PopoverPrimitive.Popup.Props &
   Pick<
     PopoverPrimitive.Positioner.Props,
     "align" | "alignOffset" | "side" | "sideOffset"
-  >) {
+  > & {
+    // Explicitly separated from ...props: this needs to reach the Portal
+    // specifically, not the Popup, so a popover can be scoped inside a
+    // themed container instead of defaulting to document.body. Most
+    // consumers omit this and get the default (document.body) behavior,
+    // only popovers that actually live inside a scoped preview need it.
+    container?: PopoverPrimitive.Portal.Props["container"];
+  }) {
   return (
-    <PopoverPrimitive.Portal>
+    <PopoverPrimitive.Portal container={container}>
       <PopoverPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}

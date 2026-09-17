@@ -41,7 +41,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-accent="tushe"
       data-neutral="Mauve"
       data-radius="dafault"
-      data-font="preset-5"
+      data-font="preset-1"
       suppressHydrationWarning
       className={cn("h-full", "antialiased", preset1.variable, preset2.variable, preset3.variable, preset4.variable, preset5.variable, "font-sans")}
     >
