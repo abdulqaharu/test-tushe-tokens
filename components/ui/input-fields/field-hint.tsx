@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Info } from "@phosphor-icons/react";
+import { InfoIcon } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
 
 export interface FieldHintProps {
@@ -18,7 +18,7 @@ export function FieldHint({ hint, error, disabled }: FieldHintProps) {
         disabled && "text-surface-faint-disabled"
       )}
     >
-      <Info className="size-4 shrink-0" />
+      <InfoIcon className="size-4 shrink-0" />
       <p className="text-xs font-normal leading-4 tracking-tight">{hint}</p>
     </div>
   );

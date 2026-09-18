@@ -1,5 +1,5 @@
 import * as React from "react";
-import { UserCircle, Lightning, CaretDown } from "@phosphor-icons/react";
+import { UserCircleIcon, LightningIcon, CaretDownIcon } from "@phosphor-icons/react";
 import { FieldLabel } from "./field-label";
 import { FieldHint } from "./field-hint";
 import { cn } from "@/lib/utils";
@@ -61,7 +61,7 @@ const InviteInput = React.forwardRef<HTMLInputElement, InviteInputProps>(
           )}
         >
           <span className="flex size-5 shrink-0 items-center justify-center icon-surface-faint">
-            {leftIcon ?? <UserCircle weight="regular" />}
+            {leftIcon ?? <UserCircleIcon weight="regular" />}
           </span>
           <input
             ref={ref}
@@ -82,9 +82,9 @@ const InviteInput = React.forwardRef<HTMLInputElement, InviteInputProps>(
             disabled={disabled}
             className="flex shrink-0 items-center gap-1 disabled:cursor-not-allowed"
           >
-            <Lightning className="size-5 icon-surface-faint" />
+            <LightningIcon className="size-5 icon-surface-faint" />
             <span className="text-sm font-normal leading-4 tracking-tight text-surface-subtle">{permission}</span>
-            <CaretDown className="size-5 icon-surface-faint" />
+            <CaretDownIcon className="size-5 icon-surface-faint" />
           </button>
         </div>
 

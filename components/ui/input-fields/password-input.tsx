@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Lock, Eye, EyeSlash, CheckCircle, XCircle } from "@phosphor-icons/react";
+import { LockIcon, EyeIcon, EyeSlashIcon, CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react";
 import { FieldLabel } from "./field-label";
 import { FieldHint } from "./field-hint";
 import { cn } from "@/lib/utils";
@@ -71,7 +71,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
             className
           )}
         >
-          <Lock className="size-5 shrink-0 icon-surface-faint" />
+          <LockIcon className="size-5 shrink-0 icon-surface-faint" />
           <input
             ref={ref}
             id={inputId}
@@ -96,9 +96,9 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
             className="flex shrink-0 items-center disabled:cursor-not-allowed"
           >
             {visible ? (
-              <EyeSlash className="size-5 icon-surface-faint" />
+              <EyeSlashIcon className="size-5 icon-surface-faint" />
             ) : (
-              <Eye className="size-5 icon-surface-faint" />
+              <EyeIcon className="size-5 icon-surface-faint" />
             )}
           </button>
         </div>
@@ -111,7 +111,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
             <div className="flex flex-wrap items-start gap-2">
               {STRENGTH_RULES.map((rule) => {
                 const passed = rule.test(currentValue);
-                const Icon = passed ? CheckCircle : XCircle;
+                const Icon = passed ? CheckCircleIcon : XCircleIcon;
                 return (
                   <div key={rule.label} className="flex items-center gap-1">
                     <Icon className={cn("size-4", passed ? "icon-success-bold" : "icon-surface-faint")} weight="fill" />

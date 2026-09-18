@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Info } from "@phosphor-icons/react";
+import { InfoIcon } from "@phosphor-icons/react";
 
 export interface FieldLabelProps {
   htmlFor: string;
@@ -19,7 +19,7 @@ export function FieldLabel({ htmlFor, label, required, optional, labelInfo }: Fi
       {optional && <span className="text-xs leading-3 text-surface-muted">(Optional)</span>}
       {labelInfo && (
         <span title={labelInfo} className="ml-0.5">
-          <Info className="size-4 icon-surface-faint" />
+          <InfoIcon className="size-4 icon-surface-faint" />
         </span>
       )}
     </div>

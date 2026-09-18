@@ -1,5 +1,5 @@
 import * as React from "react";
-import { CaretDown } from "@phosphor-icons/react";
+import { CaretDownIcon } from "@phosphor-icons/react";
 import { FieldLabel } from "./field-label";
 import { FieldHint } from "./field-hint";
 import { cn } from "@/lib/utils";
@@ -77,7 +77,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
               <span className="text-xs font-normal leading-4 tracking-tight text-surface-bold">
                 {country.dialCode}
               </span>
-              <CaretDown className="size-3.5 icon-surface-subtle" />
+              <CaretDownIcon className="size-3.5 icon-surface-subtle" />
             </span>
           </button>
 

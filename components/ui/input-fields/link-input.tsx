@@ -1,5 +1,5 @@
 import * as React from "react";
-import { LinkSimple, Copy, Check } from "@phosphor-icons/react";
+import { LinkSimpleIcon, CopyIcon, CheckIcon } from "@phosphor-icons/react";
 import { FieldLabel } from "./field-label";
 import { FieldHint } from "./field-hint";
 import { cn } from "@/lib/utils";
@@ -13,7 +13,7 @@ export interface LinkInputProps
   hint?: string;
   error?: boolean;
   id?: string;
-  onCopy?: (value: string) => void;
+  onCopyLink?: (value: string) => void;
 }
 
 /**
@@ -23,7 +23,7 @@ export interface LinkInputProps
  */
 const LinkInput = React.forwardRef<HTMLInputElement, LinkInputProps>(
   (
-    { label, required, optional, labelInfo, hint, error, id, onCopy, className, disabled, value, ...props },
+    { label, required, optional, labelInfo, hint, error, id, onCopyLink, className, disabled, value, ...props },
     ref
   ) => {
     const inputId = id ?? React.useId();
@@ -34,7 +34,7 @@ const LinkInput = React.forwardRef<HTMLInputElement, LinkInputProps>(
       try {
         await navigator.clipboard.writeText(text);
         setCopied(true);
-        onCopy?.(text);
+        onCopyLink?.(text);
         setTimeout(() => setCopied(false), 1500);
       } catch {
         // Clipboard API unavailable (non-secure context, etc.) — silently no-op.
@@ -57,7 +57,7 @@ const LinkInput = React.forwardRef<HTMLInputElement, LinkInputProps>(
           )}
         >
           <div className="flex min-w-0 flex-1 items-center gap-2 border-r border-input-faint py-2.5 pl-3 pr-2.5">
-            <LinkSimple className="size-5 shrink-0 icon-surface-faint" />
+            <LinkSimpleIcon className="size-5 shrink-0 icon-surface-faint" />
             <input
               ref={ref}
               id={inputId}
@@ -80,7 +80,7 @@ const LinkInput = React.forwardRef<HTMLInputElement, LinkInputProps>(
             aria-label="Copy link"
             className="flex shrink-0 items-center justify-center p-2.5 disabled:cursor-not-allowed"
           >
-            {copied ? <Check className="size-5 icon-success-bold" /> : <Copy className="size-5 icon-surface-faint" />}
+            {copied ? <CheckIcon className="size-5 icon-success-bold" /> : <CopyIcon className="size-5 icon-surface-faint" />}
           </button>
         </div>
 

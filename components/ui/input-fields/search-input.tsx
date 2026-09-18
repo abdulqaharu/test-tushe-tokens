@@ -1,5 +1,5 @@
 import * as React from "react";
-import { MagnifyingGlass } from "@phosphor-icons/react";
+import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { FieldLabel } from "./field-label";
 import { FieldHint } from "./field-hint";
 import { cn } from "@/lib/utils";
@@ -42,7 +42,7 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
             className
           )}
         >
-          <MagnifyingGlass className="size-5 shrink-0 icon-surface-faint" />
+          <MagnifyingGlassIcon className="size-5 shrink-0 icon-surface-faint" />
           <input
             ref={ref}
             id={inputId}

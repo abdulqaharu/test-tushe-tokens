@@ -1,11 +1,11 @@
 import * as React from "react";
 import {
-  Info,
-  UserCircle,
-  EnvelopeSimple,
-  CalendarBlank,
-  Smiley,
-  CreditCard,
+  InfoIcon,
+  UserCircleIcon,
+  EnvelopeSimpleIcon,
+  CalendarBlankIcon,
+  SmileyIcon,
+  CreditCardIcon,
 } from "@phosphor-icons/react";
 import { Input, type InputProps } from "./input";
 import { cn } from "@/lib/utils";
@@ -22,13 +22,13 @@ import { cn } from "@/lib/utils";
  * password-input.tsx, link-input.tsx, invite-input.tsx.
  */
 const TYPE_ICON_MAP = {
-  basic: UserCircle,
-  email: EnvelopeSimple,
-  date: CalendarBlank,
-  emoji: Smiley,
+  basic: UserCircleIcon,
+  email: EnvelopeSimpleIcon,
+  date: CalendarBlankIcon,
+  emoji: SmileyIcon,
   // Figma uses a decorative multi-layer "card provider" graphic here,
-  // not a real icon — CreditCard is the closest Phosphor equivalent.
-  card: CreditCard,
+  // not a real icon — CreditCardIcon is the closest Phosphor equivalent.
+  card: CreditCardIcon,
 } as const;
 
 export type TextFieldType = keyof typeof TYPE_ICON_MAP;
@@ -78,7 +78,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             {optional && <span className="text-xs leading-3 text-surface-muted">(Optional)</span>}
             {labelInfo && (
               <span title={labelInfo} className="ml-0.5">
-                <Info className="size-4 icon-surface-faint" />
+                <InfoIcon className="size-4 icon-surface-faint" />
               </span>
             )}
           </div>
@@ -101,7 +101,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
               props.disabled && "text-surface-faint-disabled"
             )}
           >
-            <Info className="size-4 shrink-0" />
+            <InfoIcon className="size-4 shrink-0" />
             <p className="text-xs font-normal leading-4 tracking-tight">{hint}</p>
           </div>
         )}
