@@ -13,7 +13,7 @@ export function IntegrationCard() {
   const [enabled, setEnabled] = useState(false);
 
   return (
-    <div className="bg-surface-subtle border-Input-faint flex w-full flex-col items-start gap-5 rounded-xl border p-4">
+    <div className="bg-surface-subtle border-input-faint flex w-full flex-col items-start gap-5 rounded-xl border p-4">
       <div className="flex w-full items-start justify-between">
         <div className="flex flex-col items-start gap-4">
           <div className="bg-surface-flat shadow flex size-12 items-center justify-center rounded-xl">

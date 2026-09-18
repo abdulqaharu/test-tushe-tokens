@@ -29,7 +29,7 @@ export function SelectableCard({
       className={
         selected
           ? "bg-brand-subtle-selected border-brand-bold relative flex w-[243px] cursor-pointer flex-col items-start gap-5 rounded-lg border p-4 text-left"
-          : "bg-input-subtle border-input-faint relative flex w-[243px] cursor-pointer flex-col items-start gap-5 rounded-lg border border-Input-faint p-4 text-left"
+          : "bg-input-subtle border-input-faint relative flex w-[243px] cursor-pointer flex-col items-start gap-5 rounded-lg border border-input-faint p-4 text-left"
       }
     >
       <span className="size-7">{icon}</span>
@@ -37,7 +37,10 @@ export function SelectableCard({
         <p className="text-surface-bold text-sm font-medium">{title}</p>
         <p className="text-surface-subtle text-xs">{description}</p>
       </div>
-      <RadioGroupItem value={value} className="absolute right-[9px] top-[9px]" />
+      <RadioGroupItem
+        value={value}
+        className="absolute right-[9px] top-[9px]"
+      />
     </label>
   );
 }

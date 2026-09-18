@@ -1,7 +1,11 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { IdentificationCardIcon, CloudArrowUpIcon, FileIcon } from "@phosphor-icons/react";
+import {
+  IdentificationCardIcon,
+  CloudArrowUpIcon,
+  FileIcon,
+} from "@phosphor-icons/react";
 
 // The radio indicator at top is a static visual here, not a real
 // RadioGroup, there's only one card in this frame with nothing else to
@@ -25,7 +29,9 @@ export function FileUploadCard() {
     <div className="bg-brand-subtle-selected border-brand-bold flex w-full flex-col gap-0.5 rounded-xl border p-1">
       <div className="relative flex items-center gap-2 rounded-xl px-3 py-2.5">
         <IdentificationCardIcon className="text-surface-bold size-7" />
-        <p className="text-surface-bold flex-1 text-sm font-medium">National Identification Number</p>
+        <p className="text-surface-bold flex-1 text-sm font-medium">
+          National Identification Number
+        </p>
         <span className="relative size-5 shrink-0 overflow-clip">
           <span className="bg-brand-bold absolute inset-[10%] rounded-full" />
           <span className="bg-surface-flat absolute inset-[30%] rounded-full" />
@@ -58,12 +64,14 @@ export function FileUploadCard() {
           </div>
         )}
 
-        <div className="flex flex-col items-center gap-2.5 text-center">
+        <div className="flex flex-col items-center gap-1.5 text-center">
           <p className="text-surface-bold text-sm font-medium">
             {fileName ?? "Choose a file or drag & drop it here."}
           </p>
           <p className="text-surface-muted text-xs">
-            {fileName ? "Ready to upload." : "JPEG, PNG, and PDF formats, up to 1 MB."}
+            {fileName
+              ? "Ready to upload."
+              : "JPEG, PNG, and PDF formats, up to 1 MB."}
           </p>
         </div>
 
@@ -72,7 +80,9 @@ export function FileUploadCard() {
           type="file"
           accept=".jpg,.jpeg,.png,.pdf"
           className="hidden"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFiles(e.target.files)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleFiles(e.target.files)
+          }
         />
         <button
           onClick={() => inputRef.current?.click()}

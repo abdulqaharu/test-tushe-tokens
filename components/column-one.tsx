@@ -1,8 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { InfoIcon, EnvelopeSimpleIcon, WechatLogoIcon, TerminalWindowIcon, DevicesIcon, SpinnerIcon } from "@phosphor-icons/react";
-
+import {
+  InfoIcon,
+  EnvelopeSimpleIcon,
+  WechatLogoIcon,
+  TerminalWindowIcon,
+  DevicesIcon,
+  SpinnerIcon,
+} from "@phosphor-icons/react";
 
 import { SelectableCard } from "./selectable-card";
 import { SegmentedToggle, Segment } from "./segmented-toggle";
@@ -12,13 +18,16 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { PriceSlider } from "./ui/price-slider";
 import { SelectField } from "./select-field";
 
-
 // Mock content only, per the decision this session, the real State field
 // has no options list captured from Figma to translate.
 const MOCK_STATES = ["Lagos", "Abuja (FCT)", "Rivers", "Kano", "Oyo"];
 
-export function ColumnOne({ container }: { container?: HTMLDivElement | null }){
- const [checkboxChecked, setCheckboxChecked] = useState(true);
+export function ColumnOne({
+  container,
+}: {
+  container?: HTMLDivElement | null;
+}) {
+  const [checkboxChecked, setCheckboxChecked] = useState(true);
   const [toggleOn, setToggleOn] = useState(true);
   const [state, setState] = useState<string | null>(null);
   const [contactTab, setContactTab] = useState<"emails" | "chat">("emails");
@@ -36,7 +45,9 @@ export function ColumnOne({ container }: { container?: HTMLDivElement | null }){
         />
         <div className="flex items-center gap-1">
           <InfoIcon className="text-surface-muted size-4" />
-          <span className="text-surface-muted text-xs">We wont share your email</span>
+          <span className="text-surface-muted text-xs">
+            We wont share your email
+          </span>
         </div>
       </div>
 
@@ -55,9 +66,16 @@ export function ColumnOne({ container }: { container?: HTMLDivElement | null }){
           group, not two fixed states side by side, RadioGroup needs its
           default vertical stacking overridden to sit inline in this row. */}
       <div className="flex w-64 items-center justify-center gap-8">
-        <Checkbox checked={checkboxChecked} onCheckedChange={setCheckboxChecked} />
+        <Checkbox
+          checked={checkboxChecked}
+          onCheckedChange={setCheckboxChecked}
+        />
         <Switch checked={toggleOn} onCheckedChange={setToggleOn} />
-        <RadioGroup value={demoRadio} onValueChange={(v: string) => setDemoRadio(v)} className="flex items-center gap-3">
+        <RadioGroup
+          value={demoRadio}
+          onValueChange={(v: string) => setDemoRadio(v)}
+          className="flex items-center gap-3"
+        >
           <RadioGroupItem value="a" />
           <RadioGroupItem value="b" />
         </RadioGroup>
@@ -69,18 +87,48 @@ export function ColumnOne({ container }: { container?: HTMLDivElement | null }){
       {/* Emails/Chat pill, reuses the same SegmentedToggle as the
           Components/Dashboard tabs and the theme toggle */}
       <SegmentedToggle>
-        <Segment active={contactTab === "emails"} onClick={() => setContactTab("emails")}>
+        <Segment
+          active={contactTab === "emails"}
+          onClick={() => setContactTab("emails")}
+        >
           <div className="flex items-center gap-1.5">
-            <EnvelopeSimpleIcon className={contactTab === "emails" ? "text-brand-bold size-4" : "text-surface-muted size-4"} />
-            <span className={contactTab === "emails" ? "text-brand-bold text-sm font-medium" : "text-surface-muted text-sm font-medium"}>
+            <EnvelopeSimpleIcon
+              className={
+                contactTab === "emails"
+                  ? "text-brand-bold size-4"
+                  : "text-surface-muted size-4"
+              }
+            />
+            <span
+              className={
+                contactTab === "emails"
+                  ? "text-brand-bold text-sm font-medium"
+                  : "text-surface-muted text-sm font-medium"
+              }
+            >
               Emails
             </span>
           </div>
         </Segment>
-        <Segment active={contactTab === "chat"} onClick={() => setContactTab("chat")}>
+        <Segment
+          active={contactTab === "chat"}
+          onClick={() => setContactTab("chat")}
+        >
           <div className="flex items-center gap-1.5">
-            <WechatLogoIcon className={contactTab === "chat" ? "text-brand-bold size-4" : "text-surface-muted size-4"} />
-            <span className={contactTab === "chat" ? "text-brand-bold text-sm font-medium" : "text-surface-muted text-sm font-medium"}>
+            <WechatLogoIcon
+              className={
+                contactTab === "chat"
+                  ? "text-brand-bold size-4"
+                  : "text-surface-muted size-4"
+              }
+            />
+            <span
+              className={
+                contactTab === "chat"
+                  ? "text-brand-bold text-sm font-medium"
+                  : "text-surface-muted text-sm font-medium"
+              }
+            >
               Chat
             </span>
           </div>
@@ -91,7 +139,9 @@ export function ColumnOne({ container }: { container?: HTMLDivElement | null }){
           independently-clickable divs */}
       <RadioGroup
         value={selectedCard}
-        onValueChange={(value: string) => setSelectedCard(value as "api" | "branded")}
+        onValueChange={(value: string) =>
+          setSelectedCard(value as "api" | "branded")
+        }
         className="flex flex-col gap-4"
       >
         <SelectableCard

@@ -3,7 +3,13 @@
 // between the five-control row and the selectable cards below, both use
 // the identical selected/unselected treatment.
 
-export function RadioDot({ selected, className = "" }: { selected: boolean; className?: string }) {
+export function RadioDot({
+  selected,
+  className = "",
+}: {
+  selected: boolean;
+  className?: string;
+}) {
   return (
     <div className={`relative size-5 shrink-0 overflow-clip ${className}`}>
       {selected ? (

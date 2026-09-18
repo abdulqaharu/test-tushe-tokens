@@ -59,7 +59,7 @@ export  function PreviewCanvas() {
 
   return (
     <div className="">
-      <div className="flex items-center justify-between sticky top-0 bg-surface-flat border-b border-surface-faint py-4 px-8">
+      <div className="flex items-center justify-between sticky top-0 bg-surface-flat border-b border-surface-faint py-4 px-8 z-10">
         <SegmentedToggle>
           <Segment active={view === "components"} onClick={() => setView("components")}>
             <span className={view === "components" ? "text-brand-bold text-sm font-medium" : "text-surface-muted text-sm font-medium"}>

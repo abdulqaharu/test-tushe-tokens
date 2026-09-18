@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 import { HexColorPicker } from "react-colorful";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { DimensionTrigger } from "./dimension-trigger";
 
 const ACCENT_PRESETS = ["Purple", "Blue", "Teal", "Green", "tushe"];
@@ -33,10 +37,15 @@ export function AccentPicker({
               mode === "preset" ? (
                 <span
                   className="size-[18px] rounded-full border border-white"
-                  style={{ background: `var(--primitives-color-${preset.toLowerCase()}-500)` }}
+                  style={{
+                    background: `var(--primitives-color-${preset.toLowerCase()}-500)`,
+                  }}
                 />
               ) : (
-                <span className="size-[18px] rounded-full border border-white" style={{ background: hex }} />
+                <span
+                  className="size-[18px] rounded-full border border-white"
+                  style={{ background: hex }}
+                />
               )
             }
           />
@@ -53,7 +62,9 @@ export function AccentPicker({
               }}
               aria-label={name}
               className="size-[14px] rounded-full border border-white"
-              style={{ background: `var(--primitives-color-${name.toLowerCase()}-500)` }}
+              style={{
+                background: `var(--primitives-color-${name.toLowerCase()}-500)`,
+              }}
             />
           ))}
         </div>

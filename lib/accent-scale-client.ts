@@ -10,7 +10,18 @@
 // scale, even an unusual-looking one for extreme inputs, rather than
 // refusing outright.
 
-export type AccentStep = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
+export type AccentStep =
+  | 50
+  | 100
+  | 200
+  | 300
+  | 400
+  | 500
+  | 600
+  | 700
+  | 800
+  | 900
+  | 950;
 
 export interface GeneratedAccentScale {
   steps: Record<AccentStep, string>;
@@ -40,7 +51,8 @@ function hexToRgb(hex: string) {
 }
 function rgbToHex(r: number, g: number, b: number) {
   const to255 = (c: number) => Math.round(linearToSrgb(c) * 255);
-  const toHex = (c: number) => Math.max(0, Math.min(255, c)).toString(16).padStart(2, "0").toUpperCase();
+  const toHex = (c: number) =>
+    Math.max(0, Math.min(255, c)).toString(16).padStart(2, "0").toUpperCase();
   return `#${toHex(to255(r))}${toHex(to255(g))}${toHex(to255(b))}`;
 }
 function hexToOklch(hex: string) {
@@ -74,7 +86,14 @@ function oklchToLinearRgb(L: number, C: number, H: number) {
 }
 function inGamut(L: number, C: number, H: number, eps = 1e-4) {
   const { r, g, b } = oklchToLinearRgb(L, C, H);
-  return r >= -eps && r <= 1 + eps && g >= -eps && g <= 1 + eps && b >= -eps && b <= 1 + eps;
+  return (
+    r >= -eps &&
+    r <= 1 + eps &&
+    g >= -eps &&
+    g <= 1 + eps &&
+    b >= -eps &&
+    b <= 1 + eps
+  );
 }
 function maxChroma(L: number, H: number, hi = 0.4) {
   if (!inGamut(L, 0, H)) return 0;
@@ -96,7 +115,9 @@ function relativeLuminance(hex: string) {
   return 0.2126 * rl + 0.7152 * gl + 0.0722 * bl;
 }
 function contrastRatio(hexA: string, hexB: string) {
-  const [l1, l2] = [relativeLuminance(hexA), relativeLuminance(hexB)].sort((a, b) => b - a);
+  const [l1, l2] = [relativeLuminance(hexA), relativeLuminance(hexB)].sort(
+    (a, b) => b - a,
+  );
   return (l1 + 0.05) / (l2 + 0.05);
 }
 function pickTextColor(bgHex: string) {
@@ -106,10 +127,21 @@ function pickTextColor(bgHex: string) {
   return white >= black ? "#FFFFFF" : "#000000";
 }
 
-const STEPS: AccentStep[] = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+const STEPS: AccentStep[] = [
+  50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
+];
 const REFERENCE_L: Record<AccentStep, number> = {
-  50: 0.975, 100: 0.945, 200: 0.895, 300: 0.825, 400: 0.735,
-  500: 0.638, 600: 0.565, 700: 0.475, 800: 0.385, 900: 0.305, 950: 0.225,
+  50: 0.975,
+  100: 0.945,
+  200: 0.895,
+  300: 0.825,
+  400: 0.735,
+  500: 0.638,
+  600: 0.565,
+  700: 0.475,
+  800: 0.385,
+  900: 0.305,
+  950: 0.225,
 };
 
 export function generateAccentScale(inputHex: string): GeneratedAccentScale {
@@ -142,7 +174,8 @@ export function generateAccentScale(inputHex: string): GeneratedAccentScale {
   }
 
   const base500 = hexToRgb(steps[500]);
-  const toRgbStr = (r: number, g: number, b: number) => `${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)}`;
+  const toRgbStr = (r: number, g: number, b: number) =>
+    `${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)}`;
   const alphas = {
     "alpha-subtle": `rgba(${toRgbStr(base500.r, base500.g, base500.b)}, 0.08)`,
     "alpha-default": `rgba(${toRgbStr(base500.r, base500.g, base500.b)}, 0.16)`,
@@ -156,7 +189,9 @@ export function generateAccentScale(inputHex: string): GeneratedAccentScale {
 // Converts a generated scale into the exact 15 CSS custom properties every
 // semantic accent token already chains through, --theme-theme-50 through
 // 950 plus the 4 alphas, ready to spread directly into a React style prop.
-export function accentScaleToCssVars(scale: GeneratedAccentScale): Record<string, string> {
+export function accentScaleToCssVars(
+  scale: GeneratedAccentScale,
+): Record<string, string> {
   const vars: Record<string, string> = {};
   for (const step of STEPS) {
     vars[`--theme-theme-${step}`] = scale.steps[step];

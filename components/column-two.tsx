@@ -27,7 +27,12 @@ import { SortableItem } from "./sortable-item";
 // There's nothing in this column that opens it, wiring it as a real modal
 // would mean inventing a trigger that doesn't exist in the source design.
 
-type ListRow = { id: string; title: string; description: string; checked: boolean };
+type ListRow = {
+  id: string;
+  title: string;
+  description: string;
+  checked: boolean;
+};
 
 const INITIAL_ROWS: ListRow[] = [
   {
@@ -53,7 +58,9 @@ export function ColumnTwo() {
   // shouldn't be the one interactive piece that only works by dragging).
   const sensors = useSensors(
     useSensor(PointerSensor),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
   );
 
   function handleDragEnd(event: DragEndEvent) {
@@ -67,7 +74,9 @@ export function ColumnTwo() {
   }
 
   function toggleRow(id: string, checked: boolean) {
-    setRows((current: ListRow[]) => current.map((r: ListRow) => (r.id === id ? { ...r, checked } : r)));
+    setRows((current: ListRow[]) =>
+      current.map((r: ListRow) => (r.id === id ? { ...r, checked } : r)),
+    );
   }
 
   return (
@@ -88,8 +97,15 @@ export function ColumnTwo() {
       <IntegrationCard />
 
       <div className=" flex w-full flex-col overflow-hidden rounded-xl">
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-          <SortableContext items={rows.map((r: ListRow) => r.id)} strategy={verticalListSortingStrategy}>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext
+            items={rows.map((r: ListRow) => r.id)}
+            strategy={verticalListSortingStrategy}
+          >
             {rows.map((row: ListRow, index: number) => (
               <div key={row.id}>
                 <SortableItem id={row.id}>
@@ -105,21 +121,28 @@ export function ColumnTwo() {
                     />
                   )}
                 </SortableItem>
-                {index < rows.length - 1 && <div className="bg-surface-faint h-px w-full" />}
+                {index < rows.length - 1 && (
+                  <div className="bg-surface-faint h-px w-full" />
+                )}
               </div>
             ))}
           </SortableContext>
         </DndContext>
       </div>
 
-      <div className="bg-surface-subtle border-Input-faint flex w-full flex-col rounded-xl border">
+      <div className="bg-surface-subtle border-input-faint flex w-full flex-col rounded-xl border">
         <div className="flex flex-col gap-7 p-4 pt-5">
-          <CheckCircleIcon weight="fill" className="text-success-subtle size-10" />
+          <CheckCircleIcon
+            weight="fill"
+            className="text-success-subtle size-10"
+          />
           <div className="flex flex-col gap-4">
-            <p className="text-surface-bold text-sm font-semibold">Request sent</p>
+            <p className="text-surface-bold text-sm font-semibold">
+              Request sent
+            </p>
             <p className="text-surface-subtle text-sm">
-              We'll follow up within 1 business day to activate Loan and confirm pricing. You can
-              track this request on your Billing page.
+              We'll follow up within 1 business day to activate Loan and confirm
+              pricing. You can track this request on your Billing page.
             </p>
           </div>
         </div>

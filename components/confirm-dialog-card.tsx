@@ -16,26 +16,33 @@ export function ConfirmDialogCard() {
   const [note, setNote] = useState("");
 
   return (
-    <div className="bg-surface-subtle border-Input-faint isolate flex w-full flex-col overflow-hidden rounded-xl border">
+    <div className="bg-surface-subtle border-input-faint isolate flex w-full flex-col overflow-hidden rounded-xl border">
       <div className="flex flex-col gap-7 p-4 pt-5">
         <div className="flex items-center gap-1.5">
-          <WarningCircleIcon weight="fill" className="text-negative-subtle size-10" />
+          <WarningCircleIcon
+            weight="fill"
+            className="icon-negative-subtle size-10"
+          />
         </div>
         <div className="flex flex-col gap-4">
           <p className="text-surface-bold text-sm font-semibold">
             Suspend Abdulqahar Usman&rsquo;s account?
           </p>
-          <p className="text-surface-muted text-xs">
-            This will initiate a full refund to the customer via the original payment method. This
-            cannot be undone.
+          <p className="text-surface-muted text-sm">
+            This will initiate a full refund to the customer via the original
+            payment method. This cannot be undone.
           </p>
         </div>
         <div className="flex w-full flex-col gap-1.5">
-          <span className="text-surface-subtle text-sm font-medium">Additional note</span>
-          <div className="bg-input-flat relative flex h-40 w-full flex-col rounded-lg p-3">
+          <span className="text-surface-subtle text-sm font-medium">
+            Additional note
+          </span>
+          <div className="bg-input-faint relative flex h-40 w-full flex-col rounded-lg p-3">
             <textarea
               value={note}
-              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setNote(e.target.value.slice(0, MAX_LENGTH))}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                setNote(e.target.value.slice(0, MAX_LENGTH))
+              }
               placeholder="Enter a description"
               className="text-surface-bold placeholder:text-surface-faint h-full w-full resize-none bg-transparent text-sm outline-none"
             />
