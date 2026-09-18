@@ -36,14 +36,14 @@ export function AccentPicker({
             swatch={
               mode === "preset" ? (
                 <span
-                  className="size-[18px] rounded-full border border-white"
+                  className="size-4.5 rounded-full border border-white"
                   style={{
                     background: `var(--primitives-color-${preset.toLowerCase()}-500)`,
                   }}
                 />
               ) : (
                 <span
-                  className="size-[18px] rounded-full border border-white"
+                  className="size-4.5 rounded-full border border-white"
                   style={{ background: hex }}
                 />
               )
@@ -51,7 +51,7 @@ export function AccentPicker({
           />
         }
       />
-      <PopoverContent className="w-[181px] p-[10px]">
+      <PopoverContent className="w-45.25 p-2.5 gap-1">
         <div className="flex items-center justify-between">
           {ACCENT_PRESETS.map((name) => (
             <button
@@ -61,7 +61,7 @@ export function AccentPicker({
                 setOpen(false);
               }}
               aria-label={name}
-              className="size-[14px] rounded-full border border-white"
+              className="size-5 rounded-full border border-white"
               style={{
                 background: `var(--primitives-color-${name.toLowerCase()}-500)`,
               }}
@@ -69,7 +69,7 @@ export function AccentPicker({
           ))}
         </div>
 
-        <div className="mt-[10px]">
+        <div className="mt-1">
           <HexColorPicker
             color={hex}
             onChange={onCustomHex}
@@ -77,9 +77,9 @@ export function AccentPicker({
           />
         </div>
 
-        <div className="bg-input-subtle mt-[10px] flex h-7 items-center rounded-lg px-2">
+        <div className="bg-input-subtle mt-2.5 flex h-7 items-center rounded-lg px-2">
           <span
-            className="mr-1.5 size-[14px] shrink-0 rounded-full border border-white"
+            className="mr-1.5 size-4 shrink-0 rounded-full border border-white"
             style={{ background: hex }}
           />
           <span className="text-surface-faint text-xs">#</span>

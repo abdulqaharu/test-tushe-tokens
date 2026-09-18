@@ -1,0 +1,25 @@
+import * as React from "react";
+import { Info } from "@phosphor-icons/react";
+import { cn } from "@/lib/utils";
+
+export interface FieldHintProps {
+  hint?: string;
+  error?: boolean;
+  disabled?: boolean;
+}
+
+export function FieldHint({ hint, error, disabled }: FieldHintProps) {
+  if (!hint) return null;
+  return (
+    <div
+      className={cn(
+        "flex items-center gap-1",
+        error ? "text-negative-subtle" : "text-surface-muted",
+        disabled && "text-surface-faint-disabled"
+      )}
+    >
+      <Info className="size-4 shrink-0" />
+      <p className="text-xs font-normal leading-4 tracking-tight">{hint}</p>
+    </div>
+  );
+}
