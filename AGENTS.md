@@ -55,29 +55,47 @@ first move (the Company field in `column-one.tsx`).
 
 ```
 components/ui/input-fields/input.tsx          — base primitive (cva variants: size, state)
-components/ui/input-fields/text-field.tsx     — label + input + hint; `type` prop covers
-                                                  icon-swap-only variants: basic, email,
-                                                  date, emoji, card
+components/ui/input-fields/text-field.tsx     — label + input + hint; `type` prop covers the
+                                                  simple icon-swap variants only: basic, email
+                                                  (blur-validated), card (live-masked +
+                                                  Luhn-checked). Date and Emoji moved out to
+                                                  their own components (below) since they need
+                                                  a popover, not just an icon swap.
+components/ui/input-fields/date-input.tsx     — button (not a text input) + popover with
+                                                  Day/Month/Year dropdowns; any subset can be
+                                                  picked, nothing forces the other two
+components/ui/input-fields/emoji-input.tsx    — free-text input + popover emoji grid behind
+                                                  the smiley icon; picking one inserts at the
+                                                  caret without taking typing away
 components/ui/input-fields/field-label.tsx    — shared label row
 components/ui/input-fields/field-hint.tsx     — shared hint row
-components/ui/input-fields/phone-input.tsx    — country code dropdown + input
+components/ui/input-fields/phone-input.tsx    — real country popover (flag + dial code list,
+                                                  `countries` prop) + digits-only masking +
+                                                  blur-validated against a per-country length
+                                                  table
 components/ui/input-fields/website-input.tsx  — fixed "https://" prefix + input
-components/ui/input-fields/amount-input.tsx   — currency symbol + input + currency picker
-                                                  (white/bordered surface, NOT bg-input-subtle
-                                                  — that's the Figma spec, not a bug)
+components/ui/input-fields/amount-input.tsx   — real currency popover (`currencies` prop) +
+                                                  live thousands-separator formatting, digits/
+                                                  decimal-only masking (white/bordered surface,
+                                                  NOT bg-input-subtle — that's the Figma spec,
+                                                  not a bug)
 components/ui/input-fields/search-input.tsx   — magnifying glass + optional shortcut badge
 components/ui/input-fields/password-input.tsx — lock icon + working show/hide toggle +
                                                   optional live strength checklist
 components/ui/input-fields/link-input.tsx     — Figma calls this "🔘 Button" but it's a
                                                   link field with copy-to-clipboard
 components/ui/input-fields/invite-input.tsx   — Figma calls this "🔽 Dropdown" but it's an
-                                                  invite field with an inline permission
-                                                  picker (not a generic select)
+                                                  invite field with a real permission popover
+                                                  (`permissions` prop), not a generic select
 lib/mock-data.ts                              — MOCK_COUNTRIES, MOCK_CURRENCIES,
                                                   MOCK_PERMISSIONS + DEFAULT_* exports
 app/input-fields/page.tsx                     — visual QA page for every type/state/size
                                                   of the components above
 ```
+
+Every field in the set now shows a real focus ring (`has-[:focus-visible]:ring-*` on the
+outer row, since the ring classes used to sit on the wrapper `<div>` while only the nested
+`<input>` ever actually receives `:focus-visible` — they never matched).
 
 Note the two separate preview pages, don't conflate them:
 - `app/preview/page.tsx` → renders `<PreviewCanvas />` (`components/preview-canvas.tsx`)
@@ -141,14 +159,31 @@ set above and not something to merge with it.
 
 ## Not yet wired (open work on the input-fields set itself)
 
-- `PhoneInput`, `AmountInput`, `InviteInput` accept `on*PickerOpen` callbacks but
-  have no real dropdown/sheet behind them — the preview page just cycles mock
-  data on click for visual purposes.
 - Flag images in `lib/mock-data.ts` load from `flagcdn.com` (external CDN) — fine
   for dev QA, swap before shipping to production if that's not acceptable.
 - Card type's left icon is Phosphor's `CreditCard` as a stand-in — Figma's actual
   asset is a decorative multi-layer graphic, not a simple icon. Revisit if pixel
   parity matters for that one.
+- Emoji picker (`emoji-input.tsx`) is a small curated 24-emoji grid, not a real
+  searchable emoji database — genuinely out of scope for a design-system demo.
+- Phone mobile-number length validation (`MOBILE_LENGTH` in `phone-input.tsx`) is
+  a small hardcoded table, not a real phone-number library (e.g. libphonenumber)
+  — fine for the 5 mock countries here, not meant to generalize.
+
+`PhoneInput`, `AmountInput`, and `InviteInput` used to only expose `on*PickerOpen`
+callbacks with no real dropdown behind them. They now own a real Base UI Popover
+each (country / currency / permission list, via new required `countries` /
+`currencies` / `permissions` props) — this closed that gap, it's not open work
+anymore.
+
+**Fixed while wiring these up:** `tw-animate-css` was in `package.json` but never
+imported into `app/globals.css`, so every Popover's `data-open`/`data-closed`
+animate-in/out classes referenced animations that didn't exist — popovers never
+visibly transitioned, and (more importantly) Base UI's exit-animation-then-unmount
+logic waits for a real `animationend` event that never fired, so a closed popover
+stayed mounted indefinitely. Added `@import "tw-animate-css";` to `globals.css`
+(right after `@import "tailwindcss";`) to fix it repo-wide, not just for the new
+components.
 
 ## Porting to the main repo (later, not yet scoped)
 

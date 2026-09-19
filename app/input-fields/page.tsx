@@ -2,6 +2,8 @@
 
 import * as React from "react";
 import { TextField, type TextFieldType } from "@/components/ui/input-fields/text-field";
+import { DateInput } from "@/components/ui/input-fields/date-input";
+import { EmojiInput } from "@/components/ui/input-fields/emoji-input";
 import { PhoneInput } from "@/components/ui/input-fields/phone-input";
 import { WebsiteInput } from "@/components/ui/input-fields/website-input";
 import { AmountInput } from "@/components/ui/input-fields/amount-input";
@@ -9,11 +11,14 @@ import { SearchInput } from "@/components/ui/input-fields/search-input";
 import { PasswordInput } from "@/components/ui/input-fields/password-input";
 import { LinkInput } from "@/components/ui/input-fields/link-input";
 import { InviteInput } from "@/components/ui/input-fields/invite-input";
-import { MOCK_COUNTRIES,DEFAULT_COUNTRY,
+import {
+  MOCK_COUNTRIES,
+  DEFAULT_COUNTRY,
   MOCK_CURRENCIES,
   DEFAULT_CURRENCY,
-  DEFAULT_PERMISSION, } from "@/lib/mock-data";
-
+  MOCK_PERMISSIONS,
+  DEFAULT_PERMISSION,
+} from "@/lib/mock-data";
 
 /** Small layout helpers — presentational only, not part of the design system. */
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -34,22 +39,12 @@ function Cell({ caption, children }: { caption: string; children: React.ReactNod
   );
 }
 
-const TEXT_FIELD_TYPES: TextFieldType[] = ["basic", "email", "date", "emoji", "card"];
+const TEXT_FIELD_TYPES: TextFieldType[] = ["basic", "email", "card"];
 
 export default function ComponentPreviewPage() {
   const [country, setCountry] = React.useState(DEFAULT_COUNTRY);
   const [currency, setCurrency] = React.useState(DEFAULT_CURRENCY);
   const [permission, setPermission] = React.useState<string>(DEFAULT_PERMISSION);
-
-  const cycleCountry = () =>
-    setCountry((c) => MOCK_COUNTRIES[(MOCK_COUNTRIES.indexOf(c) + 1) % MOCK_COUNTRIES.length]);
-  const cycleCurrency = () =>
-    setCurrency((c) => MOCK_CURRENCIES[(MOCK_CURRENCIES.indexOf(c) + 1) % MOCK_CURRENCIES.length]);
-  const cyclePermission = () =>
-    setPermission((p) => {
-      const opts = ["can view", "can edit", "can manage", "no access"];
-      return opts[(opts.indexOf(p) + 1) % opts.length];
-    });
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-12 bg-surface-flat px-6 py-10">
@@ -67,11 +62,23 @@ export default function ComponentPreviewPage() {
             <TextField
               type={type}
               label={type[0].toUpperCase() + type.slice(1)}
-              placeholder="Placeholder text..."
-              hint="This is a hint text to help user."
+              placeholder={type === "card" ? "0000 0000 0000 0000" : "Placeholder text..."}
+              hint={
+                type === "email"
+                  ? "Blurs to validate — try an incomplete address."
+                  : type === "card"
+                    ? "Formats live and checks the Luhn digit on blur."
+                    : "This is a hint text to help user."
+              }
             />
           </Cell>
         ))}
+        <Cell caption="date">
+          <DateInput label="Date" hint="Pick any subset of day / month / year." />
+        </Cell>
+        <Cell caption="emoji">
+          <EmojiInput label="Emoji" placeholder="Type or pick an emoji..." hint="Click the smiley to open the picker." />
+        </Cell>
       </Section>
 
       {/* 2. States (Basic type) */}
@@ -115,22 +122,30 @@ export default function ComponentPreviewPage() {
           <PhoneInput
             label="Phone Number"
             country={country}
-            onCountryPickerOpen={cycleCountry}
+            countries={MOCK_COUNTRIES}
+            onCountryChange={setCountry}
             placeholder="(555) 000-0000"
-            hint="Click the flag to cycle mock countries."
+            hint="Pick a country, then a number of the right length for it."
           />
         </Cell>
         <Cell caption="Error">
           <PhoneInput
             label="Phone Number"
             country={country}
-            onCountryPickerOpen={cycleCountry}
+            countries={MOCK_COUNTRIES}
+            onCountryChange={setCountry}
             error
             hint="Enter a valid phone number."
           />
         </Cell>
         <Cell caption="Disabled">
-          <PhoneInput label="Phone Number" country={country} disabled defaultValue="5550000000" />
+          <PhoneInput
+            label="Phone Number"
+            country={country}
+            countries={MOCK_COUNTRIES}
+            disabled
+            defaultValue="5550000000"
+          />
         </Cell>
       </Section>
 
@@ -153,19 +168,38 @@ export default function ComponentPreviewPage() {
           <AmountInput
             label="Amount"
             currency={currency}
-            onCurrencyPickerOpen={cycleCurrency}
+            currencies={MOCK_CURRENCIES}
+            onCurrencyChange={setCurrency}
             placeholder="0.00"
-            hint="Click the flag to cycle mock currencies."
+            hint="Only digits land here, grouped live as you type."
           />
         </Cell>
         <Cell caption="Without currency picker">
-          <AmountInput label="Amount" currency={currency} showCurrencyPicker={false} placeholder="0.00" />
+          <AmountInput
+            label="Amount"
+            currency={currency}
+            currencies={MOCK_CURRENCIES}
+            showCurrencyPicker={false}
+            placeholder="0.00"
+          />
         </Cell>
         <Cell caption="Error">
-          <AmountInput label="Amount" currency={currency} error hint="Amount exceeds available balance." />
+          <AmountInput
+            label="Amount"
+            currency={currency}
+            currencies={MOCK_CURRENCIES}
+            error
+            hint="Amount exceeds available balance."
+          />
         </Cell>
         <Cell caption="Disabled">
-          <AmountInput label="Amount" currency={currency} disabled defaultValue="50000" />
+          <AmountInput
+            label="Amount"
+            currency={currency}
+            currencies={MOCK_CURRENCIES}
+            disabled
+            defaultValue="50000"
+          />
         </Cell>
       </Section>
 
@@ -217,22 +251,30 @@ export default function ComponentPreviewPage() {
           <InviteInput
             label="Invite Members"
             permission={permission}
-            onPermissionPickerOpen={cyclePermission}
+            permissions={MOCK_PERMISSIONS}
+            onPermissionChange={setPermission}
             placeholder="Enter email or name"
-            hint="Click the permission label to cycle mock options."
+            hint="Pick an access level from the dropdown."
           />
         </Cell>
         <Cell caption="Error">
           <InviteInput
             label="Invite Members"
             permission={permission}
-            onPermissionPickerOpen={cyclePermission}
+            permissions={MOCK_PERMISSIONS}
+            onPermissionChange={setPermission}
             error
             hint="This person is already a member."
           />
         </Cell>
         <Cell caption="Disabled">
-          <InviteInput label="Invite Members" permission={permission} disabled defaultValue="jane@company.com" />
+          <InviteInput
+            label="Invite Members"
+            permission={permission}
+            permissions={MOCK_PERMISSIONS}
+            disabled
+            defaultValue="jane@company.com"
+          />
         </Cell>
       </Section>
     </div>

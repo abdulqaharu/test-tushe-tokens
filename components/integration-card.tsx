@@ -52,8 +52,8 @@ export function IntegrationCard() {
             </div>
           </div>
           <div className="flex flex-col gap-3">
-            <p className="text-surface-bold text-sm font-medium">Flutterwave</p>
-            <p className="text-surface-subtle text-sm">
+            <p className="text-surface-bold text-heading-sm">Flutterwave</p>
+            <p className="text-surface-subtle text-body-base-normal">
               Quickly identifies compliance risks in contracts, reports, and
               filings
             </p>

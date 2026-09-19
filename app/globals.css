@@ -1,7 +1,9 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 @import "@tushe-abdulqahar/tokens/tokens.css";
 @import "@tushe-abdulqahar/tokens/theme-map.css";
 @import "@tushe-abdulqahar/tokens/utilities.css";
+@import "@tushe-abdulqahar/tokens/text-styles.css";
 
 :root {
   --background: #ffffff;

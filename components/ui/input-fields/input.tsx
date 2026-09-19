@@ -11,11 +11,11 @@ const inputVariants = cva(
   [
     "flex w-full items-center gap-2 rounded-lg",
     "bg-input-subtle",
-    "font-medium text-sm leading-5 tracking-tight",
+    "font-medium text-sm  tracking-tight",
     "text-surface-bold",
     "placeholder:text-surface-faint placeholder:font-medium",
     "outline-none transition-shadow duration-150",
-    "focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-white",
+    "has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-brand has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-white",
     "disabled:bg-input-faint-disabled disabled:text-surface-faint-disabled disabled:cursor-not-allowed",
   ],
   {
@@ -27,18 +27,19 @@ const inputVariants = cva(
       },
       state: {
         default: "",
-        error: "bg-negative-faint focus-visible:ring-negative",
+        error: "bg-negative-faint has-[:focus-visible]:ring-negative",
       },
     },
     defaultVariants: {
       size: "md",
       state: "default",
     },
-  }
+  },
 );
 
 export interface InputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
+  extends
+    Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
     VariantProps<typeof inputVariants> {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -66,7 +67,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
       </div>
     );
-  }
+  },
 );
 Input.displayName = "Input";
 

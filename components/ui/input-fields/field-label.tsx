@@ -9,14 +9,27 @@ export interface FieldLabelProps {
   labelInfo?: string;
 }
 
-export function FieldLabel({ htmlFor, label, required, optional, labelInfo }: FieldLabelProps) {
+export function FieldLabel({
+  htmlFor,
+  label,
+  required,
+  optional,
+  labelInfo,
+}: FieldLabelProps) {
   return (
     <div className="flex items-center gap-px">
-      <label htmlFor={htmlFor} className="text-sm font-medium leading-4 tracking-tight text-surface-subtle">
+      <label
+        htmlFor={htmlFor}
+        className="text-sm font-medium  tracking-tight text-surface-subtle"
+      >
         {label}
       </label>
-      {required && <span className="text-xs leading-3 text-negative-bold">*</span>}
-      {optional && <span className="text-xs leading-3 text-surface-muted">(Optional)</span>}
+      {required && (
+        <span className="text-xs leading-3 text-negative-bold">*</span>
+      )}
+      {optional && (
+        <span className="text-xs leading-3 text-surface-muted">(Optional)</span>
+      )}
       {labelInfo && (
         <span title={labelInfo} className="ml-0.5">
           <InfoIcon className="size-4 icon-surface-faint" />

@@ -3,8 +3,10 @@ import { FieldLabel } from "./field-label";
 import { FieldHint } from "./field-hint";
 import { cn } from "@/lib/utils";
 
-export interface WebsiteInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
+export interface WebsiteInputProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "size"
+> {
   label?: string;
   required?: boolean;
   optional?: boolean;
@@ -22,26 +24,47 @@ export interface WebsiteInputProps
  */
 const WebsiteInput = React.forwardRef<HTMLInputElement, WebsiteInputProps>(
   (
-    { label, required, optional, labelInfo, hint, error, id, prefix = "https://", className, disabled, ...props },
-    ref
+    {
+      label,
+      required,
+      optional,
+      labelInfo,
+      hint,
+      error,
+      id,
+      prefix = "https://",
+      className,
+      disabled,
+      ...props
+    },
+    ref,
   ) => {
     const inputId = id ?? React.useId();
 
     return (
       <div className="flex w-full flex-col gap-1">
         {label && (
-          <FieldLabel htmlFor={inputId} label={label} required={required} optional={optional} labelInfo={labelInfo} />
+          <FieldLabel
+            htmlFor={inputId}
+            label={label}
+            required={required}
+            optional={optional}
+            labelInfo={labelInfo}
+          />
         )}
 
         <div
           className={cn(
-            "flex h-10 w-full items-stretch overflow-hidden rounded-lg",
+            "flex h-10 w-full items-stretch overflow-hidden rounded-lg transition-shadow duration-150",
             error ? "bg-negative-faint" : "bg-input-subtle",
             disabled && "bg-input-faint-disabled",
-            className
+            error
+              ? "has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-negative has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-white"
+              : "has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-brand has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-white",
+            className,
           )}
         >
-          <span className="flex shrink-0 items-center px-3 text-xs font-normal leading-4 tracking-tight text-surface-muted">
+          <span className="flex shrink-0 items-center px-3 text-xs font-normal  tracking-tight text-surface-muted">
             {prefix}
           </span>
           <input
@@ -50,10 +73,10 @@ const WebsiteInput = React.forwardRef<HTMLInputElement, WebsiteInputProps>(
             type="text"
             disabled={disabled}
             className={cn(
-              "min-w-0 flex-1 border-l bg-transparent py-2.5 pl-3 pr-2.5 text-sm font-medium leading-5 tracking-tight text-surface-bold outline-none",
+              "min-w-0 flex-1 border-l bg-transparent py-2.5 pl-3 pr-2.5 text-sm font-medium  tracking-tight text-surface-bold outline-none",
               "border-input-faint",
               "placeholder:text-surface-faint placeholder:font-medium",
-              "disabled:cursor-not-allowed disabled:text-surface-faint-disabled"
+              "disabled:cursor-not-allowed disabled:text-surface-faint-disabled",
             )}
             aria-invalid={error || undefined}
             {...props}
@@ -63,7 +86,7 @@ const WebsiteInput = React.forwardRef<HTMLInputElement, WebsiteInputProps>(
         <FieldHint hint={hint} error={error} disabled={disabled} />
       </div>
     );
-  }
+  },
 );
 WebsiteInput.displayName = "WebsiteInput";
 

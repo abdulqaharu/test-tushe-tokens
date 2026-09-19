@@ -15,11 +15,11 @@ export function FieldHint({ hint, error, disabled }: FieldHintProps) {
       className={cn(
         "flex items-center gap-1",
         error ? "text-negative-subtle" : "text-surface-muted",
-        disabled && "text-surface-faint-disabled"
+        disabled && "text-surface-faint-disabled",
       )}
     >
       <InfoIcon className="size-4 shrink-0" />
-      <p className="text-xs font-normal leading-4 tracking-tight">{hint}</p>
+      <p className="text-xs font-normal  tracking-tight">{hint}</p>
     </div>
   );
 }

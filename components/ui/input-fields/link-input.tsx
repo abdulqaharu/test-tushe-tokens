@@ -4,8 +4,10 @@ import { FieldLabel } from "./field-label";
 import { FieldHint } from "./field-hint";
 import { cn } from "@/lib/utils";
 
-export interface LinkInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
+export interface LinkInputProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "size"
+> {
   label?: string;
   required?: boolean;
   optional?: boolean;
@@ -23,8 +25,21 @@ export interface LinkInputProps
  */
 const LinkInput = React.forwardRef<HTMLInputElement, LinkInputProps>(
   (
-    { label, required, optional, labelInfo, hint, error, id, onCopyLink, className, disabled, value, ...props },
-    ref
+    {
+      label,
+      required,
+      optional,
+      labelInfo,
+      hint,
+      error,
+      id,
+      onCopyLink,
+      className,
+      disabled,
+      value,
+      ...props
+    },
+    ref,
   ) => {
     const inputId = id ?? React.useId();
     const [copied, setCopied] = React.useState(false);
@@ -44,16 +59,25 @@ const LinkInput = React.forwardRef<HTMLInputElement, LinkInputProps>(
     return (
       <div className="flex w-full flex-col gap-1">
         {label && (
-          <FieldLabel htmlFor={inputId} label={label} required={required} optional={optional} labelInfo={labelInfo} />
+          <FieldLabel
+            htmlFor={inputId}
+            label={label}
+            required={required}
+            optional={optional}
+            labelInfo={labelInfo}
+          />
         )}
 
         <div
           className={cn(
-            "flex h-10 w-full items-stretch overflow-hidden rounded-lg border",
+            "flex h-10 w-full items-stretch overflow-hidden rounded-lg border transition-shadow duration-150",
             "bg-surface-flat border-input-faint",
             error && "bg-negative-faint",
             disabled && "bg-input-faint-disabled",
-            className
+            error
+              ? "has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-negative has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-white"
+              : "has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-brand has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-white",
+            className,
           )}
         >
           <div className="flex min-w-0 flex-1 items-center gap-2 border-r border-input-faint py-2.5 pl-3 pr-2.5">
@@ -65,9 +89,9 @@ const LinkInput = React.forwardRef<HTMLInputElement, LinkInputProps>(
               disabled={disabled}
               value={value}
               className={cn(
-                "min-w-0 flex-1 bg-transparent text-sm font-medium leading-5 tracking-tight text-surface-bold outline-none",
+                "min-w-0 flex-1 bg-transparent text-sm font-medium  tracking-tight text-surface-bold outline-none",
                 "placeholder:text-surface-faint placeholder:font-medium",
-                "disabled:cursor-not-allowed disabled:text-surface-faint-disabled"
+                "disabled:cursor-not-allowed disabled:text-surface-faint-disabled",
               )}
               aria-invalid={error || undefined}
               {...props}
@@ -80,14 +104,18 @@ const LinkInput = React.forwardRef<HTMLInputElement, LinkInputProps>(
             aria-label="Copy link"
             className="flex shrink-0 items-center justify-center p-2.5 disabled:cursor-not-allowed"
           >
-            {copied ? <CheckIcon className="size-5 icon-success-bold" /> : <CopyIcon className="size-5 icon-surface-faint" />}
+            {copied ? (
+              <CheckIcon className="size-5 icon-success-bold" />
+            ) : (
+              <CopyIcon className="size-5 icon-surface-faint" />
+            )}
           </button>
         </div>
 
         <FieldHint hint={hint} error={error} disabled={disabled} />
       </div>
     );
-  }
+  },
 );
 LinkInput.displayName = "LinkInput";
 

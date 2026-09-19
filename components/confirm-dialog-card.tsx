@@ -24,11 +24,11 @@ export function ConfirmDialogCard() {
             className="icon-negative-subtle size-10"
           />
         </div>
-        <div className="flex flex-col gap-4">
-          <p className="text-surface-bold text-sm font-semibold">
+        <div className="flex flex-col gap-3">
+          <p className="text-surface-bold text-heading-sm">
             Suspend Abdulqahar Usman&rsquo;s account?
           </p>
-          <p className="text-surface-muted text-sm">
+          <p className="text-surface-muted text-body-base-normal">
             This will initiate a full refund to the customer via the original
             payment method. This cannot be undone.
           </p>

@@ -4,8 +4,10 @@ import { FieldLabel } from "./field-label";
 import { FieldHint } from "./field-hint";
 import { cn } from "@/lib/utils";
 
-export interface SearchInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
+export interface SearchInputProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "size"
+> {
   label?: string;
   required?: boolean;
   optional?: boolean;
@@ -23,23 +25,44 @@ export interface SearchInputProps
  */
 const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
   (
-    { label, required, optional, labelInfo, hint, error, id, shortcut, className, disabled, ...props },
-    ref
+    {
+      label,
+      required,
+      optional,
+      labelInfo,
+      hint,
+      error,
+      id,
+      shortcut,
+      className,
+      disabled,
+      ...props
+    },
+    ref,
   ) => {
     const inputId = id ?? React.useId();
 
     return (
       <div className="flex w-full flex-col gap-1">
         {label && (
-          <FieldLabel htmlFor={inputId} label={label} required={required} optional={optional} labelInfo={labelInfo} />
+          <FieldLabel
+            htmlFor={inputId}
+            label={label}
+            required={required}
+            optional={optional}
+            labelInfo={labelInfo}
+          />
         )}
 
         <div
           className={cn(
-            "flex h-10 w-full items-center gap-2 rounded-lg pl-3 pr-1",
+            "flex h-10 w-full items-center gap-2 rounded-lg pl-3 pr-1 transition-shadow duration-150",
             error ? "bg-negative-faint" : "bg-input-subtle",
             disabled && "bg-input-faint-disabled",
-            className
+            error
+              ? "has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-negative has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-white"
+              : "has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-brand has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-white",
+            className,
           )}
         >
           <MagnifyingGlassIcon className="size-5 shrink-0 icon-surface-faint" />
@@ -49,15 +72,15 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
             type="search"
             disabled={disabled}
             className={cn(
-              "min-w-0 flex-1 bg-transparent py-2.5 text-sm font-medium leading-5 tracking-tight text-surface-bold outline-none",
+              "min-w-0 flex-1 bg-transparent py-2.5 text-sm font-medium  tracking-tight text-surface-bold outline-none",
               "placeholder:text-surface-faint placeholder:font-medium",
-              "disabled:cursor-not-allowed disabled:text-surface-faint-disabled"
+              "disabled:cursor-not-allowed disabled:text-surface-faint-disabled",
             )}
             aria-invalid={error || undefined}
             {...props}
           />
           {shortcut && (
-            <span className="flex h-8 shrink-0 items-center rounded border border-input-faint bg-surface-flat px-1.5 py-0.5 text-xs font-semibold leading-4 tracking-tighter text-surface-muted rounded-md">
+            <span className="flex h-8 shrink-0 items-center rounded border border-input-faint bg-surface-flat px-1.5 py-0.5 text-xs font-semibold  tracking-tighter text-surface-muted rounded-md">
               {shortcut}
             </span>
           )}
@@ -66,7 +89,7 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
         <FieldHint hint={hint} error={error} disabled={disabled} />
       </div>
     );
-  }
+  },
 );
 SearchInput.displayName = "SearchInput";
 

@@ -98,6 +98,7 @@ export function ColumnTwo() {
 
       <div className=" flex w-full flex-col overflow-hidden rounded-xl">
         <DndContext
+          id="reorderable-list"
           sensors={sensors}
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}

@@ -1,11 +1,19 @@
 import * as React from "react";
-import { LockIcon, EyeIcon, EyeSlashIcon, CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react";
+import {
+  LockIcon,
+  EyeIcon,
+  EyeSlashIcon,
+  CheckCircleIcon,
+  XCircleIcon,
+} from "@phosphor-icons/react";
 import { FieldLabel } from "./field-label";
 import { FieldHint } from "./field-hint";
 import { cn } from "@/lib/utils";
 
-export interface PasswordInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size" | "type"> {
+export interface PasswordInputProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "size" | "type"
+> {
   label?: string;
   required?: boolean;
   optional?: boolean;
@@ -45,11 +53,13 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
       onChange,
       ...props
     },
-    ref
+    ref,
   ) => {
     const inputId = id ?? React.useId();
     const [visible, setVisible] = React.useState(false);
-    const [internalValue, setInternalValue] = React.useState(String(defaultValue ?? ""));
+    const [internalValue, setInternalValue] = React.useState(
+      String(defaultValue ?? ""),
+    );
     const currentValue = value !== undefined ? String(value) : internalValue;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,15 +70,24 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
     return (
       <div className="flex w-full flex-col gap-1">
         {label && (
-          <FieldLabel htmlFor={inputId} label={label} required={required} optional={optional} labelInfo={labelInfo} />
+          <FieldLabel
+            htmlFor={inputId}
+            label={label}
+            required={required}
+            optional={optional}
+            labelInfo={labelInfo}
+          />
         )}
 
         <div
           className={cn(
-            "flex h-10 w-full items-center gap-2 rounded-lg pl-3 pr-2.5",
+            "flex h-10 w-full items-center gap-2 rounded-lg pl-3 pr-2.5 transition-shadow duration-150",
             error ? "bg-negative-faint" : "bg-input-subtle",
             disabled && "bg-input-faint-disabled",
-            className
+            error
+              ? "has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-negative has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-white"
+              : "has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-brand has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-white",
+            className,
           )}
         >
           <LockIcon className="size-5 shrink-0 icon-surface-faint" />
@@ -81,9 +100,9 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
             defaultValue={value === undefined ? defaultValue : undefined}
             onChange={handleChange}
             className={cn(
-              "min-w-0 flex-1 bg-transparent py-2.5 text-xs font-normal leading-4 tracking-tight text-surface-bold outline-none",
+              "min-w-0 flex-1 bg-transparent py-2.5 text-xs font-normal  tracking-tight text-surface-bold outline-none",
               "placeholder:text-surface-faint",
-              "disabled:cursor-not-allowed disabled:text-surface-faint-disabled"
+              "disabled:cursor-not-allowed disabled:text-surface-faint-disabled",
             )}
             aria-invalid={error || undefined}
             {...props}
@@ -107,15 +126,23 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
 
         {showStrength && (
           <div className="flex w-full flex-col gap-2 pt-1.5">
-            <p className="text-[11px] font-normal leading-4 tracking-tight text-surface-subtle">Must contain at least;</p>
+            <p className="text-[11px] font-normal  tracking-tight text-surface-subtle">
+              Must contain at least;
+            </p>
             <div className="flex flex-wrap items-start gap-2">
               {STRENGTH_RULES.map((rule) => {
                 const passed = rule.test(currentValue);
                 const Icon = passed ? CheckCircleIcon : XCircleIcon;
                 return (
                   <div key={rule.label} className="flex items-center gap-1">
-                    <Icon className={cn("size-4", passed ? "icon-success-bold" : "icon-surface-faint")} weight="fill" />
-                    <span className="text-[11px] font-normal leading-4 tracking-tight text-surface-subtle">
+                    <Icon
+                      className={cn(
+                        "size-4",
+                        passed ? "icon-success-bold" : "icon-surface-faint",
+                      )}
+                      weight="fill"
+                    />
+                    <span className="text-[11px] font-normal  tracking-tight text-surface-subtle">
                       {rule.label}
                     </span>
                   </div>
@@ -126,7 +153,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
         )}
       </div>
     );
-  }
+  },
 );
 PasswordInput.displayName = "PasswordInput";
 
